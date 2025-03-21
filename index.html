@@ -1,0 +1,3280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bitcoin: Beyond the Misconceptions</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+      :root {
+        --primary: #f2a900;
+        --primary-dark: #d69100;
+        --primary-light: #ffc94d;
+        --accent: #1d1d1d;
+        --secondary: #4a4a4a;
+        --tertiary: #ff9900;
+        --background: #f7f9fb;
+        --card-bg: #ffffff;
+        --text: #1a1a1a;
+        --text-secondary: #555555;
+        --border: #e0e0e0;
+        --code-bg: #2b2b2b;
+        --code-color: #f8f8f2;
+        --success: #07b998;
+        --error: #dd4c4f;
+        --warning: #ffb020;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Avenir Next", "Segoe UI", system-ui, -apple-system,
+          BlinkMacSystemFont, sans-serif;
+        line-height: 1.6;
+        color: var(--text);
+        background-color: var(--background);
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      .flex-row {
+        display: flex;
+      }
+
+      .flex-column {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .align-center {
+        align-items: center;
+      }
+
+      .justify-center {
+        justify-content: center;
+      }
+
+      .justify-between {
+        justify-content: space-between;
+      }
+
+      .gap-1 {
+        gap: 1rem;
+      }
+
+      .gap-2 {
+        gap: 2rem;
+      }
+
+      /* Typography */
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-weight: 700;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+        color: var(--accent);
+      }
+
+      h1 {
+        font-size: 3.5rem;
+        background: linear-gradient(45deg, var(--primary), var(--tertiary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+
+      h2 {
+        font-size: 2.2rem;
+        margin-top: 2.5rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 3px solid var(--primary);
+      }
+
+      h3 {
+        font-size: 1.7rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: var(--secondary);
+      }
+
+      h4 {
+        font-size: 1.4rem;
+        margin-top: 1.5rem;
+        color: var(--secondary);
+      }
+
+      p {
+        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+      }
+
+      strong {
+        font-weight: 600;
+      }
+
+      blockquote {
+        border-left: 4px solid var(--primary);
+        margin: 1.5rem 0;
+        padding: 1rem 1.5rem;
+        background-color: rgba(242, 169, 0, 0.05);
+        font-style: italic;
+      }
+
+      blockquote p {
+        margin-bottom: 0;
+      }
+
+      ul,
+      ol {
+        margin-bottom: 1.5rem;
+        padding-left: 1.5rem;
+      }
+
+      li {
+        margin-bottom: 0.5rem;
+      }
+
+      /* Header */
+      header {
+        background: linear-gradient(135deg, var(--accent), #000000);
+        color: white;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        text-decoration: none;
+      }
+
+      .logo i {
+        color: var(--primary);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+        padding-bottom: 0.25rem;
+        position: relative;
+      }
+
+      .nav-link:after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--primary);
+        transition: width 0.3s;
+      }
+
+      .nav-link:hover:after {
+        width: 100%;
+      }
+
+      /* Hero section */
+      .hero {
+        background: linear-gradient(
+            135deg,
+            rgba(29, 29, 29, 0.9),
+            rgba(0, 0, 0, 0.8)
+          ),
+          url("/api/placeholder/1280/720") center/cover no-repeat;
+        padding: 8rem 0;
+        color: white;
+        text-align: center;
+      }
+
+      .hero-title {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(45deg, var(--primary), var(--tertiary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .hero-subtitle {
+        font-size: 1.5rem;
+        margin-bottom: 2.5rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .cta-button {
+        display: inline-block;
+        background-color: var(--primary);
+        color: var(--accent);
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-decoration: none;
+        transition: all 0.3s;
+        border: 2px solid var(--primary);
+        box-shadow: 0 4px 12px rgba(242, 169, 0, 0.3);
+      }
+
+      .cta-button:hover {
+        background-color: transparent;
+        color: var(--primary);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 18px rgba(242, 169, 0, 0.4);
+      }
+
+      /* Main content */
+      .main-content {
+        padding: 4rem 0;
+      }
+
+      .section {
+        margin-bottom: 6rem;
+        scroll-margin-top: 6rem;
+      }
+
+      .section-intro {
+        max-width: 900px;
+        margin: 0 auto 3rem;
+        text-align: center;
+      }
+
+      /* Cards */
+      .card {
+        background-color: var(--card-bg);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--border);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        gap: 1rem;
+      }
+
+      .card-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: rgba(242, 169, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .card-icon i {
+        font-size: 1.8rem;
+        color: var(--primary);
+      }
+
+      .card-title {
+        margin: 0;
+        font-size: 1.6rem;
+        flex-grow: 1;
+      }
+
+      /* Fact boxes */
+      .fact-box {
+        background-color: rgba(242, 169, 0, 0.08);
+        border-left: 5px solid var(--primary);
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .fact-box h4 {
+        color: var(--primary-dark);
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .fact-box h4 i {
+        color: var(--primary);
+      }
+
+      .fact-box p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Quote boxes */
+      .quote-box {
+        background-color: rgba(74, 74, 74, 0.05);
+        border-left: 5px solid var(--secondary);
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-radius: 0 8px 8px 0;
+        position: relative;
+      }
+
+      .quote-box:before {
+        content: '"';
+        position: absolute;
+        top: 0;
+        left: 1rem;
+        font-size: 4rem;
+        line-height: 1;
+        color: rgba(74, 74, 74, 0.1);
+      }
+
+      .quote-author {
+        display: block;
+        font-weight: 600;
+        text-align: right;
+        color: var(--secondary);
+        margin-top: 1rem;
+      }
+
+      /* Tables */
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        padding: 1rem;
+        border: 1px solid var(--border);
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: var(--primary);
+        color: white;
+        font-weight: 600;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: rgba(242, 169, 0, 0.05);
+      }
+
+      /* Chart containers */
+      .chart-container {
+        background-color: var(--card-bg);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 2.5rem 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .chart-title {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        color: var(--secondary);
+        text-align: center;
+      }
+
+      .chart-wrapper {
+        position: relative;
+        margin: auto;
+        height: 400px;
+      }
+
+      /* Two-column layout */
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin: 2rem 0;
+      }
+
+      /* Code blocks */
+      .code-block {
+        background-color: var(--code-bg);
+        color: var(--code-color);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+        overflow-x: auto;
+        font-family: "Fira Code", "Cascadia Code", "Courier New", monospace;
+      }
+
+      /* Tabs */
+      .tabs {
+        display: flex;
+        margin-bottom: 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .tab {
+        padding: 1rem 1.5rem;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s;
+        font-weight: 500;
+      }
+
+      .tab.active {
+        border-bottom-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .tab-content {
+        padding: 1.5rem 0;
+      }
+
+      .tab-pane {
+        display: none;
+      }
+
+      .tab-pane.active {
+        display: block;
+      }
+
+      /* Tooltips */
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted var(--primary);
+        cursor: help;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: var(--accent);
+        color: white;
+        text-align: center;
+        border-radius: 6px;
+        padding: 1rem;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 0.9rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip .tooltip-text::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: var(--accent) transparent transparent transparent;
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      /* Timeline */
+      .timeline {
+        position: relative;
+        max-width: 1200px;
+        margin: 3rem auto;
+      }
+
+      .timeline::after {
+        content: "";
+        position: absolute;
+        width: 6px;
+        background-color: var(--border);
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -3px;
+      }
+
+      .timeline-item {
+        padding: 10px 40px;
+        position: relative;
+        width: 50%;
+        box-sizing: border-box;
+      }
+
+      .timeline-item::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: var(--card-bg);
+        border: 4px solid var(--primary);
+        top: 15px;
+        border-radius: 50%;
+        z-index: 1;
+      }
+
+      .left {
+        left: 0;
+      }
+
+      .right {
+        left: 50%;
+      }
+
+      .left::after {
+        right: -12px;
+      }
+
+      .right::after {
+        left: -12px;
+      }
+
+      .timeline-content {
+        padding: 1.5rem;
+        background-color: var(--card-bg);
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .timeline-year {
+        position: absolute;
+        display: inline-block;
+        top: 15px;
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      .left .timeline-year {
+        right: 15px;
+      }
+
+      .right .timeline-year {
+        left: 15px;
+      }
+
+      /* Footer */
+      footer {
+        background-color: var(--accent);
+        color: white;
+        padding: 4rem 0 2rem;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+      }
+
+      .footer-column h4 {
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+      }
+
+      .footer-link {
+        display: block;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 0.8rem;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-link:hover {
+        color: var(--primary);
+      }
+
+      .footer-bottom {
+        margin-top: 3rem;
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* Mobile navigation */
+      .mobile-nav-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* Responsive styles */
+      @media (max-width: 1024px) {
+        .footer-content {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .two-col {
+          grid-template-columns: 1fr;
+        }
+
+        .timeline::after {
+          left: 31px;
+        }
+
+        .timeline-item {
+          width: 100%;
+          padding-left: 70px;
+          padding-right: 25px;
+        }
+
+        .timeline-item::after {
+          left: 20px;
+        }
+
+        .left::after,
+        .right::after {
+          left: 20px;
+        }
+
+        .left .timeline-year,
+        .right .timeline-year {
+          left: 20px;
+        }
+
+        .right {
+          left: 0;
+        }
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+
+        h2 {
+          font-size: 1.8rem;
+        }
+
+        .hero {
+          padding: 5rem 0;
+        }
+
+        .hero-title {
+          font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+          font-size: 1.2rem;
+        }
+
+        .nav-links {
+          display: none;
+          position: fixed;
+          top: 70px;
+          left: 0;
+          right: 0;
+          flex-direction: column;
+          background-color: var(--accent);
+          padding: 1.5rem;
+          gap: 1rem;
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links.show {
+          display: flex;
+        }
+
+        .mobile-nav-toggle {
+          display: block;
+        }
+
+        .chart-wrapper {
+          height: 300px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .footer-content {
+          grid-template-columns: 1fr;
+        }
+
+        .card {
+          padding: 1.5rem;
+        }
+
+        .hero-title {
+          font-size: 2rem;
+        }
+
+        .chart-wrapper {
+          height: 250px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <a href="#" class="logo">
+            <i class="fab fa-bitcoin"></i>
+            <span>Bitcoin Clarity</span>
+          </a>
+          <button class="mobile-nav-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="nav-links">
+            <a href="#monetary-theory" class="nav-link">Monetary Theory</a>
+            <a href="#sound-money" class="nav-link">Sound Money</a>
+            <a href="#energy" class="nav-link">Energy & Mining</a>
+            <a href="#technical" class="nav-link">Technical</a>
+            <a href="#adoption" class="nav-link">Adoption</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <h1 class="hero-title">Bitcoin: Beyond the Misconceptions</h1>
+        <p class="hero-subtitle">
+          A comprehensive examination of Bitcoin's fundamental value
+          proposition, technological innovation, and role in the future of
+          money.
+        </p>
+        <a href="#start" class="cta-button">Explore the Truth</a>
+      </div>
+    </section>
+
+    <main class="main-content">
+      <div class="container" id="start">
+        <div class="section-intro">
+          <h2>Why This Matters</h2>
+          <p>
+            Bitcoin represents the intersection of technology, economics, and
+            philosophy. It is frequently misunderstood due to its revolutionary
+            nature, complexity, and the challenge it presents to established
+            systems. This resource aims to clarify the most persistent
+            misconceptions with factual, well-sourced information.
+          </p>
+        </div>
+
+        <section id="monetary-theory" class="section">
+          <h2>Monetary Theory & Inflation</h2>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <h3 class="card-title">The Debasement of Fiat Currency</h3>
+            </div>
+
+            <p>
+              Throughout history, every fiat currency has eventually succumbed
+              to debasement. Modern currencies, designed to be inflationary by
+              policy, are no exception. This systematic devaluation of currency
+              is not a bug—it's a feature of the current monetary system.
+            </p>
+
+            <div class="chart-container">
+              <h4 class="chart-title">
+                Purchasing Power of Major Currencies Since 1913
+              </h4>
+              <div class="chart-wrapper">
+                <canvas id="currencyPurchasingPowerChart"></canvas>
+              </div>
+            </div>
+
+            <p>
+              When examined over a long enough timeline, the pattern becomes
+              undeniable: fiat currencies consistently lose value over time. The
+              US dollar has lost over 96% of its purchasing power since the
+              Federal Reserve was established in 1913.
+            </p>
+
+            <div class="fact-box">
+              <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+              <p>
+                Inflation is not a naturally occurring phenomenon but a monetary
+                policy tool. Central banks actively target a positive inflation
+                rate (typically 2% annually), deliberately ensuring that your
+                money loses purchasing power every year.
+              </p>
+            </div>
+
+            <div class="quote-box">
+              <p>
+                "By a continuing process of inflation, governments can
+                confiscate, secretly and unobserved, an important part of the
+                wealth of their citizens."
+              </p>
+              <span class="quote-author">— John Maynard Keynes</span>
+            </div>
+
+            <h4>The Cantillon Effect: Who Benefits from Inflation?</h4>
+            <p>
+              When new money is created, it doesn't benefit everyone equally.
+              Those closest to the source of money creation (financial
+              institutions, large corporations, and wealthy individuals) receive
+              this newly created money first, before prices rise. By the time
+              this money flows to the general population, asset prices have
+              already increased.
+            </p>
+
+            <div class="two-col">
+              <div>
+                <h4>Fiat Money Characteristics:</h4>
+                <ul>
+                  <li>
+                    <strong>Unlimited supply</strong> - Central banks can create
+                    unlimited amounts
+                  </li>
+                  <li>
+                    <strong>Centralized control</strong> - Monetary policy
+                    dictated by small groups
+                  </li>
+                  <li>
+                    <strong>Inflationary by design</strong> - Loses value over
+                    time
+                  </li>
+                  <li>
+                    <strong>Requires trust</strong> in governments and financial
+                    institutions
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h4>Bitcoin Characteristics:</h4>
+                <ul>
+                  <li>
+                    <strong>Fixed supply cap</strong> - Only 21 million will
+                    ever exist
+                  </li>
+                  <li>
+                    <strong>Decentralized</strong> - No central authority can
+                    alter rules
+                  </li>
+                  <li>
+                    <strong>Disinflationary</strong> - Becomes more scarce over
+                    time
+                  </li>
+                  <li>
+                    <strong>Trustless system</strong> - Relies on mathematics
+                    and consensus
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-balance-scale"></i>
+              </div>
+              <h3 class="card-title">Bitcoin's Monetary Framework</h3>
+            </div>
+
+            <p>
+              Bitcoin was designed as a direct response to the 2008 financial
+              crisis and the subsequent government bailouts of financial
+              institutions. Its creation introduces, for the first time in
+              history, absolute digital scarcity.
+            </p>
+
+            <div class="chart-container">
+              <h4 class="chart-title">
+                Bitcoin's Fixed Supply vs. Expanding Fiat Supply
+              </h4>
+              <div class="chart-wrapper">
+                <canvas id="supplyComparisonChart"></canvas>
+              </div>
+            </div>
+
+            <h4>The Floor of Fiat and the Ceiling of Bitcoin</h4>
+            <p>
+              A common question is "What is Bitcoin's price ceiling?" This
+              question fundamentally misunderstands the relationship between
+              Bitcoin and fiat currencies.
+            </p>
+
+            <div class="fact-box">
+              <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+              <p>
+                Bitcoin doesn't have a ceiling because fiat currencies don't
+                have a floor. As long as central banks can create unlimited
+                amounts of currency, Bitcoin's price expressed in those
+                currencies can continue to rise indefinitely. What appears as
+                Bitcoin appreciating is actually fiat currency depreciating
+                against a fixed-supply asset.
+              </p>
+            </div>
+
+            <p>
+              This concept is crucial to understanding Bitcoin's long-term value
+              proposition. If Bitcoin succeeds as a global monetary network, its
+              price in fiat terms would continue to rise as adoption increases
+              and fiat currencies continue their historic pattern of debasement.
+            </p>
+
+            <div class="timeline">
+              <div class="timeline-item left">
+                <span class="timeline-year">1913</span>
+                <div class="timeline-content">
+                  <h4>Federal Reserve Created</h4>
+                  <p>
+                    Beginning of the modern era of central banking in the US
+                  </p>
+                </div>
+              </div>
+              <div class="timeline-item right">
+                <span class="timeline-year">1944</span>
+                <div class="timeline-content">
+                  <h4>Bretton Woods System</h4>
+                  <p>
+                    Dollar backed by gold, other currencies pegged to dollar
+                  </p>
+                </div>
+              </div>
+              <div class="timeline-item left">
+                <span class="timeline-year">1971</span>
+                <div class="timeline-content">
+                  <h4>Nixon Shock</h4>
+                  <p>
+                    US ends dollar convertibility to gold, beginning the fiat
+                    era
+                  </p>
+                </div>
+              </div>
+              <div class="timeline-item right">
+                <span class="timeline-year">2008</span>
+                <div class="timeline-content">
+                  <h4>Financial Crisis</h4>
+                  <p>
+                    Global economic crisis leads to unprecedented monetary
+                    expansion
+                  </p>
+                </div>
+              </div>
+              <div class="timeline-item left">
+                <span class="timeline-year">2009</span>
+                <div class="timeline-content">
+                  <h4>Bitcoin Created</h4>
+                  <p>
+                    Satoshi Nakamoto launches Bitcoin as an alternative monetary
+                    system
+                  </p>
+                </div>
+              </div>
+              <div class="timeline-item right">
+                <span class="timeline-year">2020</span>
+                <div class="timeline-content">
+                  <h4>COVID Response</h4>
+                  <p>
+                    Massive monetary stimulus accelerates currency debasement
+                    globally
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="sound-money" class="section">
+          <h2>The Properties of Sound Money</h2>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-gem"></i>
+              </div>
+              <h3 class="card-title">Beyond "Intrinsic Value"</h3>
+            </div>
+
+            <p>
+              A common criticism of Bitcoin is that it has "no intrinsic value."
+              This criticism reveals a fundamental misunderstanding of what
+              gives money its value.
+            </p>
+
+            <div class="fact-box">
+              <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+              <p>
+                No form of money has "intrinsic value" in the sense critics
+                demand of Bitcoin. Gold's value far exceeds its utility in
+                electronics or jewelry. Fiat currency's value comes purely from
+                government decree and collective acceptance. Money's value is
+                always derived from its monetary properties and network effects,
+                not inherent utility.
+              </p>
+            </div>
+
+            <h4>The Monetization Process</h4>
+            <p>
+              Throughout history, the objects that have served as money have
+              been those that best fulfill the properties required for a
+              monetary good. Bitcoin's design specifically optimizes for these
+              properties:
+            </p>
+
+            <div class="chart-container">
+              <h4 class="chart-title">
+                Monetary Properties: Bitcoin vs. Gold vs. Fiat
+              </h4>
+              <div class="chart-wrapper">
+                <canvas id="monetaryPropertiesChart"></canvas>
+              </div>
+            </div>
+
+            <table class="comparison-table">
+              <tr>
+                <th>Monetary Property</th>
+                <th>Bitcoin</th>
+                <th>Gold</th>
+                <th>Fiat Currency</th>
+              </tr>
+              <tr>
+                <td><strong>Scarcity</strong></td>
+                <td>Fixed at 21 million</td>
+                <td>Limited but extractable</td>
+                <td>Unlimited</td>
+              </tr>
+              <tr>
+                <td><strong>Durability</strong></td>
+                <td>Perfect (digital)</td>
+                <td>Excellent</td>
+                <td>Physical forms degrade</td>
+              </tr>
+              <tr>
+                <td><strong>Divisibility</strong></td>
+                <td>Up to 8 decimal places (satoshis)</td>
+                <td>Difficult to divide precisely</td>
+                <td>Limited decimal places</td>
+              </tr>
+              <tr>
+                <td><strong>Portability</strong></td>
+                <td>Perfect (information)</td>
+                <td>Poor (heavy)</td>
+                <td>Digital forms good, physical poor</td>
+              </tr>
+              <tr>
+                <td><strong>Verifiability</strong></td>
+                <td>Perfect (cryptographic)</td>
+                <td>Requires expert testing</td>
+                <td>Counterfeitable</td>
+              </tr>
+              <tr>
+                <td><strong>Fungibility</strong></td>
+                <td>High</td>
+                <td>High</td>
+                <td>High for physical, variable for digital</td>
+              </tr>
+              <tr>
+                <td><strong>Censorship Resistance</strong></td>
+                <td>Very high</td>
+                <td>Moderate</td>
+                <td>Very low</td>
+              </tr>
+            </table>
+
+            <div class="quote-box">
+              <p>
+                "I think the internet is going to be one of the major forces for
+                reducing the role of government. The one thing that's missing,
+                but that will soon be developed, is a reliable e-cash, a method
+                whereby on the Internet you can transfer funds from A to B
+                without A knowing B or B knowing A."
+              </p>
+              <span class="quote-author"
+                >— Milton Friedman, 1999 (10 years before Bitcoin)</span
+              >
+            </div>
+
+            <h4>Network Effects and Adoption</h4>
+            <p>
+              Like all successful forms of money, Bitcoin's value increases with
+              its adoption, creating a powerful network effect. The more people
+              who accept and use Bitcoin, the more valuable the network becomes
+              for all participants.
+            </p>
+
+            <div class="chart-container">
+              <h4 class="chart-title">
+                Bitcoin's Growing User Base (Active Addresses)
+              </h4>
+              <div class="chart-wrapper">
+                <canvas id="adoptionGrowthChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="energy" class="section">
+          <h2>Energy, Mining, and Environmental Considerations</h2>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-bolt"></i>
+              </div>
+              <h3 class="card-title">
+                Bitcoin's Energy Consumption in Context
+              </h3>
+            </div>
+
+            <p>
+              Bitcoin's energy usage is frequently criticized without proper
+              context. While Bitcoin does consume significant energy, this
+              consumption must be evaluated relative to both the value it
+              provides and alternative systems.
+            </p>
+
+            <div class="chart-container">
+              <h4 class="chart-title">
+                Annual Energy Consumption by Sector (TWh)
+              </h4>
+              <div class="chart-wrapper">
+                <canvas id="energyComparisonChart"></canvas>
+              </div>
+            </div>
+
+            <div class="fact-box">
+              <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+              <p>
+                Bitcoin's energy consumption is its security mechanism.
+                Proof-of-work mining converts electricity into an immutable,
+                censorship-resistant monetary network. This energy expenditure
+                is what enables Bitcoin to operate without trusted third parties
+                and resist attacks from even nation-state level adversaries.
+              </p>
+            </div>
+
+            <h4>Bitcoin's Energy Mix</h4>
+            <p>
+              Bitcoin mining is increasingly powered by renewable energy sources
+              and stranded energy that would otherwise be wasted:
+            </p>
+
+            <div class="two-col">
+              <div class="chart-container">
+                <h4 class="chart-title">Bitcoin Mining Energy Sources</h4>
+                <div class="chart-wrapper" style="height: 250px">
+                  <canvas id="miningEnergySourcesChart"></canvas>
+                </div>
+              </div>
+
+              <div>
+                <h4>Mining Innovations:</h4>
+                <ul>
+                  <li>
+                    <strong>Stranded energy utilization</strong> - Mining
+                    operations at remote hydroelectric dams, flared natural gas
+                    sites, and other locations where energy would otherwise be
+                    wasted
+                  </li>
+                  <li>
+                    <strong>Grid stabilization</strong> - Miners serve as
+                    flexible load, curtailing operations during peak demand and
+                    monetizing excess energy during low demand
+                  </li>
+                  <li>
+                    <strong>Renewable acceleration</strong> - Mining operations
+                    providing economic incentives for new renewable energy
+                    development
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <h4>The Full Cost of Traditional Banking</h4>
+            <p>
+              The traditional banking and monetary system requires an extensive
+              physical and digital infrastructure that consumes far more energy
+              than Bitcoin:
+            </p>
+
+            <ul>
+              <li>Physical bank branches (nearly 80,000 in the US alone)</li>
+              <li>ATM networks (over 470,000 in the US)</li>
+              <li>Card payment networks and data centers</li>
+              <li>Armored vehicles for cash transport</li>
+              <li>Government mints for physical currency production</li>
+              <li>Employee commuting and business travel</li>
+            </ul>
+
+            <div class="quote-box">
+              <p>
+                "Bitcoin is a revolution that's creating an alternative
+                financial system with a fundamentally different energy profile
+                than the legacy system. It's not just about replacing one
+                currency with another; it's about building a more efficient
+                monetary network from the ground up."
+              </p>
+              <span class="quote-author">— Nic Carter, Bitcoin researcher</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-microchip"></i>
+              </div>
+              <h3 class="card-title">The Mining Process Explained</h3>
+            </div>
+
+            <p>
+              Bitcoin mining is often misunderstood as "solving meaningless
+              puzzles" when it actually serves a critical function in
+              maintaining the network's security and integrity.
+            </p>
+
+            <div class="two-col">
+              <div>
+                <h4>What Bitcoin Miners Actually Do:</h4>
+                <ol>
+                  <li>Collect pending transactions from the network</li>
+                  <li>
+                    Validate that each transaction follows all network rules
+                  </li>
+                  <li>Organize valid transactions into a block</li>
+                  <li>Compute a valid proof-of-work for the block</li>
+                  <li>Broadcast the block to the network for verification</li>
+                </ol>
+              </div>
+              <div>
+                <h4>Critical Functions Mining Provides:</h4>
+                <ul>
+                  <li>Transaction processing and settlement</li>
+                  <li>Network security against attacks</li>
+                  <li>Fair distribution of new bitcoins</li>
+                  <li>Decentralized consensus mechanism</li>
+                  <li>Elimination of need for trusted third parties</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="chart-container">
+              <h4 class="chart-title">
+                Bitcoin Mining Security Over Time (Network Hashrate)
+              </h4>
+              <div class="chart-wrapper">
+                <canvas id="hashrateGrowthChart"></canvas>
+              </div>
+            </div>
+
+            <div class="fact-box">
+              <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+              <p>
+                Bitcoin's mining difficulty automatically adjusts every 2,016
+                blocks (approximately two weeks) to maintain a consistent block
+                production rate regardless of how much mining power joins or
+                leaves the network. This adaptive security mechanism is a
+                crucial innovation that maintains Bitcoin's monetary policy.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="technical" class="section">
+          <h2>Technical Understanding: How Bitcoin Actually Works</h2>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-cogs"></i>
+              </div>
+              <h3 class="card-title">The Bitcoin Protocol Simplified</h3>
+            </div>
+
+            <p>
+              Bitcoin is a protocol—a set of rules that defines how the network
+              operates. Understanding these fundamental rules helps clarify many
+              misconceptions.
+            </p>
+
+            <div class="chart-container">
+              <h4 class="chart-title">Bitcoin's Layered Architecture</h4>
+              <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- Base Layer: Protocol -->
+                <rect
+                  x="100"
+                  y="300"
+                  width="600"
+                  height="80"
+                  rx="5"
+                  fill="#f2a900"
+                />
+                <text
+                  x="400"
+                  y="345"
+                  font-size="20"
+                  text-anchor="middle"
+                  fill="#1a1a1a"
+                >
+                  Protocol Layer (Bitcoin Core)
+                </text>
+                <text
+                  x="400"
+                  y="370"
+                  font-size="14"
+                  text-anchor="middle"
+                  fill="#1a1a1a"
+                >
+                  Consensus rules, blockchain, proof-of-work
+                </text>
+
+                <!-- Middle Layer: Network -->
+                <rect
+                  x="150"
+                  y="200"
+                  width="500"
+                  height="80"
+                  rx="5"
+                  fill="#4a4a4a"
+                />
+                <text
+                  x="400"
+                  y="245"
+                  font-size="20"
+                  text-anchor="middle"
+                  fill="#ffffff"
+                >
+                  Network Layer
+                </text>
+                <text
+                  x="400"
+                  y="270"
+                  font-size="14"
+                  text-anchor="middle"
+                  fill="#ffffff"
+                >
+                  P2P network, transaction propagation
+                </text>
+
+                <!-- Lightning Network Layer -->
+                <rect
+                  x="200"
+                  y="100"
+                  width="400"
+                  height="80"
+                  rx="5"
+                  fill="#1a1a1a"
+                />
+                <text
+                  x="400"
+                  y="145"
+                  font-size="20"
+                  text-anchor="middle"
+                  fill="#ffffff"
+                >
+                  Lightning Network
+                </text>
+                <text
+                  x="400"
+                  y="170"
+                  font-size="14"
+                  text-anchor="middle"
+                  fill="#ffffff"
+                >
+                  Instant payments, micropayments, scalability
+                </text>
+
+                <!-- Application Layer -->
+                <rect
+                  x="250"
+                  y="20"
+                  width="300"
+                  height="60"
+                  rx="5"
+                  fill="#3498db"
+                />
+                <text
+                  x="400"
+                  y="55"
+                  font-size="20"
+                  text-anchor="middle"
+                  fill="#ffffff"
+                >
+                  Application Layer
+                </text>
+
+                <!-- Connecting Lines -->
+                <line
+                  x1="400"
+                  y1="300"
+                  x2="400"
+                  y2="280"
+                  stroke="#333"
+                  stroke-width="2"
+                />
+                <line
+                  x1="400"
+                  y1="200"
+                  x2="400"
+                  y2="180"
+                  stroke="#333"
+                  stroke-width="2"
+                />
+                <line
+                  x1="400"
+                  y1="100"
+                  x2="400"
+                  y2="80"
+                  stroke="#333"
+                  stroke-width="2"
+                />
+              </svg>
+            </div>
+
+            <h4>Core Components:</h4>
+
+            <div class="tabs">
+              <div class="tab active" data-tab="blockchain">Blockchain</div>
+              <div class="tab" data-tab="transactions">Transactions</div>
+              <div class="tab" data-tab="keys">Keys & Addresses</div>
+              <div class="tab" data-tab="mining">Mining</div>
+              <div class="tab" data-tab="nodes">Nodes</div>
+            </div>
+
+            <div class="tab-content">
+              <div class="tab-pane active" id="blockchain">
+                <p>
+                  The blockchain is Bitcoin's distributed ledger—a
+                  chronological, immutable record of all transactions. Unlike
+                  traditional databases controlled by a single entity, the
+                  blockchain is maintained by thousands of nodes around the
+                  world.
+                </p>
+
+                <div class="chart-container">
+                  <h4 class="chart-title">Blockchain Structure</h4>
+                  <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Block 1 -->
+                    <rect
+                      x="50"
+                      y="50"
+                      width="150"
+                      height="100"
+                      rx="5"
+                      fill="#f2a900"
+                    />
+                    <text
+                      x="125"
+                      y="85"
+                      font-size="16"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Block #750,000
+                    </text>
+                    <text
+                      x="125"
+                      y="110"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Previous Hash
+                    </text>
+                    <text
+                      x="125"
+                      y="130"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Transactions
+                    </text>
+
+                    <!-- Block 2 -->
+                    <rect
+                      x="250"
+                      y="50"
+                      width="150"
+                      height="100"
+                      rx="5"
+                      fill="#f2a900"
+                    />
+                    <text
+                      x="325"
+                      y="85"
+                      font-size="16"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Block #750,001
+                    </text>
+                    <text
+                      x="325"
+                      y="110"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Previous Hash
+                    </text>
+                    <text
+                      x="325"
+                      y="130"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Transactions
+                    </text>
+
+                    <!-- Block 3 -->
+                    <rect
+                      x="450"
+                      y="50"
+                      width="150"
+                      height="100"
+                      rx="5"
+                      fill="#f2a900"
+                    />
+                    <text
+                      x="525"
+                      y="85"
+                      font-size="16"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Block #750,002
+                    </text>
+                    <text
+                      x="525"
+                      y="110"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Previous Hash
+                    </text>
+                    <text
+                      x="525"
+                      y="130"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Transactions
+                    </text>
+
+                    <!-- Block 4 (Current) -->
+                    <rect
+                      x="650"
+                      y="50"
+                      width="150"
+                      height="100"
+                      rx="5"
+                      fill="#f2a900"
+                    />
+                    <text
+                      x="725"
+                      y="85"
+                      font-size="16"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Block #750,003
+                    </text>
+                    <text
+                      x="725"
+                      y="110"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Previous Hash
+                    </text>
+                    <text
+                      x="725"
+                      y="130"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Transactions
+                    </text>
+
+                    <!-- Connecting arrows -->
+                    <line
+                      x1="200"
+                      y1="100"
+                      x2="250"
+                      y2="100"
+                      stroke="#1a1a1a"
+                      stroke-width="2"
+                      marker-end="url(#arrowhead)"
+                    />
+                    <line
+                      x1="400"
+                      y1="100"
+                      x2="450"
+                      y2="100"
+                      stroke="#1a1a1a"
+                      stroke-width="2"
+                      marker-end="url(#arrowhead)"
+                    />
+                    <line
+                      x1="600"
+                      y1="100"
+                      x2="650"
+                      y2="100"
+                      stroke="#1a1a1a"
+                      stroke-width="2"
+                      marker-end="url(#arrowhead)"
+                    />
+
+                    <!-- Arrowhead marker -->
+                    <defs>
+                      <marker
+                        id="arrowhead"
+                        markerWidth="10"
+                        markerHeight="7"
+                        refX="10"
+                        refY="3.5"
+                        orient="auto"
+                      >
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#1a1a1a" />
+                      </marker>
+                    </defs>
+                  </svg>
+                </div>
+
+                <p>
+                  Each block contains a cryptographic hash of the previous
+                  block, creating an unbroken chain back to the genesis block.
+                  This structure makes the blockchain tamper-evident—any attempt
+                  to modify a past transaction would require recalculating all
+                  subsequent blocks, which is computationally infeasible.
+                </p>
+              </div>
+
+              <div class="tab-pane" id="transactions">
+                <p>
+                  Bitcoin transactions don't actually send coins between
+                  wallets. Instead, they reassign ownership of unspent
+                  transaction outputs (UTXOs).
+                </p>
+
+                <div class="chart-container">
+                  <h4 class="chart-title">UTXO Transaction Model</h4>
+                  <svg viewBox="0 0 800 250" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Transaction 1 -->
+                    <rect
+                      x="100"
+                      y="50"
+                      width="200"
+                      height="100"
+                      rx="5"
+                      fill="#4a4a4a"
+                    />
+                    <text
+                      x="200"
+                      y="80"
+                      font-size="16"
+                      text-anchor="middle"
+                      fill="#ffffff"
+                    >
+                      Transaction
+                    </text>
+
+                    <!-- Inputs -->
+                    <rect
+                      x="120"
+                      y="100"
+                      width="70"
+                      height="30"
+                      rx="3"
+                      fill="#f2a900"
+                    />
+                    <text
+                      x="155"
+                      y="120"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Input: 5 BTC
+                    </text>
+
+                    <rect
+                      x="210"
+                      y="100"
+                      width="70"
+                      height="30"
+                      rx="3"
+                      fill="#f2a900"
+                    />
+                    <text
+                      x="245"
+                      y="120"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Input: 3 BTC
+                    </text>
+
+                    <!-- Transaction 2 -->
+                    <rect
+                      x="500"
+                      y="50"
+                      width="200"
+                      height="150"
+                      rx="5"
+                      fill="#4a4a4a"
+                    />
+                    <text
+                      x="600"
+                      y="80"
+                      font-size="16"
+                      text-anchor="middle"
+                      fill="#ffffff"
+                    >
+                      Transaction
+                    </text>
+
+                    <!-- Outputs -->
+                    <rect
+                      x="520"
+                      y="100"
+                      width="70"
+                      height="30"
+                      rx="3"
+                      fill="#3498db"
+                    />
+                    <text
+                      x="555"
+                      y="120"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#ffffff"
+                    >
+                      Output: 7 BTC
+                    </text>
+
+                    <rect
+                      x="610"
+                      y="100"
+                      width="70"
+                      height="30"
+                      rx="3"
+                      fill="#3498db"
+                    />
+                    <text
+                      x="645"
+                      y="120"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#ffffff"
+                    >
+                      Output: 0.9 BTC
+                    </text>
+
+                    <rect
+                      x="565"
+                      y="150"
+                      width="70"
+                      height="30"
+                      rx="3"
+                      fill="#e74c3c"
+                    />
+                    <text
+                      x="600"
+                      y="170"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#ffffff"
+                    >
+                      Fee: 0.1 BTC
+                    </text>
+
+                    <!-- Arrow -->
+                    <line
+                      x1="300"
+                      y1="100"
+                      x2="500"
+                      y2="100"
+                      stroke="#ffffff"
+                      stroke-width="2"
+                      marker-end="url(#arrowhead2)"
+                    />
+                    <text
+                      x="400"
+                      y="90"
+                      font-size="14"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Signs with private key
+                    </text>
+
+                    <!-- Arrowhead marker -->
+                    <defs>
+                      <marker
+                        id="arrowhead2"
+                        markerWidth="10"
+                        markerHeight="7"
+                        refX="10"
+                        refY="3.5"
+                        orient="auto"
+                      >
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#ffffff" />
+                      </marker>
+                    </defs>
+                  </svg>
+                </div>
+
+                <p>
+                  A transaction consumes unspent outputs (inputs) and creates
+                  new unspent outputs. The inputs must be signed with the
+                  correct private keys, proving ownership. If the input value
+                  exceeds the intended payment, a "change" output is created and
+                  sent back to the sender.
+                </p>
+              </div>
+
+              <div class="tab-pane" id="keys">
+                <p>
+                  Bitcoin uses public-key cryptography to establish ownership
+                  and authorization. Understanding keys and addresses is
+                  essential to grasping Bitcoin's security model.
+                </p>
+
+                <div class="two-col">
+                  <div>
+                    <h4>Key Concepts:</h4>
+                    <ul>
+                      <li>
+                        <strong>Private Key</strong>: A secret number that
+                        allows bitcoin to be spent
+                      </li>
+                      <li>
+                        <strong>Public Key</strong>: Derived from the private
+                        key, used to create addresses
+                      </li>
+                      <li>
+                        <strong>Bitcoin Address</strong>: A hash of the public
+                        key, used as a destination for payments
+                      </li>
+                      <li>
+                        <strong>Digital Signature</strong>: Proves ownership
+                        without revealing the private key
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="chart-container">
+                    <h4 class="chart-title">Key Relationships</h4>
+                    <svg
+                      viewBox="0 0 400 300"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <!-- Private Key -->
+                      <rect
+                        x="50"
+                        y="50"
+                        width="300"
+                        height="50"
+                        rx="5"
+                        fill="#e74c3c"
+                      />
+                      <text
+                        x="200"
+                        y="80"
+                        font-size="16"
+                        text-anchor="middle"
+                        fill="#ffffff"
+                      >
+                        Private Key
+                      </text>
+                      <text
+                        x="200"
+                        y="100"
+                        font-size="10"
+                        text-anchor="middle"
+                        fill="#ffffff"
+                      >
+                        (Keep secure, never share)
+                      </text>
+
+                      <!-- Arrow down -->
+                      <line
+                        x1="200"
+                        y1="100"
+                        x2="200"
+                        y2="140"
+                        stroke="#1a1a1a"
+                        stroke-width="2"
+                        marker-end="url(#arrowhead3)"
+                      />
+                      <text
+                        x="250"
+                        y="125"
+                        font-size="12"
+                        text-anchor="start"
+                        fill="#1a1a1a"
+                      >
+                        One-way function
+                      </text>
+
+                      <!-- Public Key -->
+                      <rect
+                        x="50"
+                        y="140"
+                        width="300"
+                        height="50"
+                        rx="5"
+                        fill="#3498db"
+                      />
+                      <text
+                        x="200"
+                        y="170"
+                        font-size="16"
+                        text-anchor="middle"
+                        fill="#ffffff"
+                      >
+                        Public Key
+                      </text>
+
+                      <!-- Arrow down -->
+                      <line
+                        x1="200"
+                        y1="190"
+                        x2="200"
+                        y2="230"
+                        stroke="#1a1a1a"
+                        stroke-width="2"
+                        marker-end="url(#arrowhead3)"
+                      />
+                      <text
+                        x="250"
+                        y="215"
+                        font-size="12"
+                        text-anchor="start"
+                        fill="#1a1a1a"
+                      >
+                        Hash function
+                      </text>
+
+                      <!-- Bitcoin Address -->
+                      <rect
+                        x="50"
+                        y="230"
+                        width="300"
+                        height="50"
+                        rx="5"
+                        fill="#2ecc71"
+                      />
+                      <text
+                        x="200"
+                        y="260"
+                        font-size="16"
+                        text-anchor="middle"
+                        fill="#1a1a1a"
+                      >
+                        Bitcoin Address
+                      </text>
+                      <text
+                        x="200"
+                        y="280"
+                        font-size="10"
+                        text-anchor="middle"
+                        fill="#1a1a1a"
+                      >
+                        (Share to receive bitcoin)
+                      </text>
+
+                      <!-- Arrowhead marker -->
+                      <defs>
+                        <marker
+                          id="arrowhead3"
+                          markerWidth="10"
+                          markerHeight="7"
+                          refX="10"
+                          refY="3.5"
+                          orient="auto"
+                        >
+                          <polygon points="0 0, 10 3.5, 0 7" fill="#1a1a1a" />
+                        </marker>
+                      </defs>
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="fact-box">
+                  <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+                  <p>
+                    Bitcoin's security relies on the mathematical impossibility
+                    of deriving a private key from a public key or address. This
+                    asymmetric cryptography enables a trustless system where
+                    anyone can verify transactions, but only the key holder can
+                    create valid signatures.
+                  </p>
+                </div>
+              </div>
+
+              <div class="tab-pane" id="mining">
+                <p>
+                  Mining is the process by which transactions are validated and
+                  added to the blockchain. It serves multiple crucial functions:
+                </p>
+
+                <ul>
+                  <li>Orders transactions chronologically</li>
+                  <li>Protects the network against double-spending</li>
+                  <li>
+                    Issues new bitcoins according to the predetermined schedule
+                  </li>
+                  <li>
+                    Provides distributed consensus without a central authority
+                  </li>
+                </ul>
+
+                <div class="chart-container">
+                  <h4 class="chart-title">Mining Process</h4>
+                  <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Step 1: Collect transactions -->
+                    <rect
+                      x="50"
+                      y="50"
+                      width="150"
+                      height="80"
+                      rx="5"
+                      fill="#3498db"
+                    />
+                    <text
+                      x="125"
+                      y="80"
+                      font-size="14"
+                      text-anchor="middle"
+                      fill="#ffffff"
+                    >
+                      1. Collect & Verify
+                    </text>
+                    <text
+                      x="125"
+                      y="100"
+                      font-size="14"
+                      text-anchor="middle"
+                      fill="#ffffff"
+                    >
+                      Transactions
+                    </text>
+
+                    <!-- Step 2: Build block -->
+                    <rect
+                      x="250"
+                      y="50"
+                      width="150"
+                      height="80"
+                      rx="5"
+                      fill="#3498db"
+                    />
+                    <text
+                      x="325"
+                      y="80"
+                      font-size="14"
+                      text-anchor="middle"
+                      fill="#ffffff"
+                    >
+                      2. Create
+                    </text>
+                    <text
+                      x="325"
+                      y="100"
+                      font-size="14"
+                      text-anchor="middle"
+                      fill="#ffffff"
+                    >
+                      Block Template
+                    </text>
+
+                    <!-- Step 3: Mining -->
+                    <rect
+                      x="450"
+                      y="50"
+                      width="150"
+                      height="80"
+                      rx="5"
+                      fill="#e74c3c"
+                    />
+                    <text
+                      x="525"
+                      y="80"
+                      font-size="14"
+                      text-anchor="middle"
+                      fill="#ffffff"
+                    >
+                      3. Compute
+                    </text>
+                    <text
+                      x="525"
+                      y="100"
+                      font-size="14"
+                      text-anchor="middle"
+                      fill="#ffffff"
+                    >
+                      Proof-of-Work
+                    </text>
+
+                    <!-- Step 4: Broadcast -->
+                    <rect
+                      x="650"
+                      y="50"
+                      width="150"
+                      height="80"
+                      rx="5"
+                      fill="#2ecc71"
+                    />
+                    <text
+                      x="725"
+                      y="80"
+                      font-size="14"
+                      text-anchor="middle"
+                      fill="#ffffff"
+                    >
+                      4. Broadcast
+                    </text>
+                    <text
+                      x="725"
+                      y="100"
+                      font-size="14"
+                      text-anchor="middle"
+                      fill="#ffffff"
+                    >
+                      Valid Block
+                    </text>
+
+                    <!-- Mining detail -->
+                    <rect
+                      x="330"
+                      y="180"
+                      width="390"
+                      height="100"
+                      rx="5"
+                      fill="#f2a900"
+                    />
+                    <text
+                      x="525"
+                      y="200"
+                      font-size="16"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      Proof-of-Work Mining
+                    </text>
+                    <text
+                      x="525"
+                      y="225"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      1. Add a nonce value to the block header
+                    </text>
+                    <text
+                      x="525"
+                      y="245"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      2. Compute the SHA-256 hash of the header
+                    </text>
+                    <text
+                      x="525"
+                      y="265"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      3. Check if hash meets difficulty target
+                    </text>
+                    <text
+                      x="525"
+                      y="285"
+                      font-size="12"
+                      text-anchor="middle"
+                      fill="#1a1a1a"
+                    >
+                      4. If not, increment nonce and try again
+                    </text>
+
+                    <!-- Curved arrow -->
+                    <path
+                      d="M525,130 C525,150 525,150 525,180"
+                      stroke="#1a1a1a"
+                      stroke-width="2"
+                      fill="none"
+                      marker-end="url(#arrowhead4)"
+                    />
+
+                    <!-- Connecting arrows -->
+                    <line
+                      x1="200"
+                      y1="90"
+                      x2="250"
+                      y2="90"
+                      stroke="#1a1a1a"
+                      stroke-width="2"
+                      marker-end="url(#arrowhead4)"
+                    />
+                    <line
+                      x1="400"
+                      y1="90"
+                      x2="450"
+                      y2="90"
+                      stroke="#1a1a1a"
+                      stroke-width="2"
+                      marker-end="url(#arrowhead4)"
+                    />
+                    <line
+                      x1="600"
+                      y1="90"
+                      x2="650"
+                      y2="90"
+                      stroke="#1a1a1a"
+                      stroke-width="2"
+                      marker-end="url(#arrowhead4)"
+                    />
+
+                    <!-- Arrowhead marker -->
+                    <defs>
+                      <marker
+                        id="arrowhead4"
+                        markerWidth="10"
+                        markerHeight="7"
+                        refX="10"
+                        refY="3.5"
+                        orient="auto"
+                      >
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#1a1a1a" />
+                      </marker>
+                    </defs>
+                  </svg>
+                </div>
+
+                <div class="fact-box">
+                  <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+                  <p>
+                    Mining difficulty adjusts approximately every two weeks to
+                    maintain a consistent block time of about 10 minutes,
+                    regardless of how much computing power joins or leaves the
+                    network. This ensures predictable issuance and transaction
+                    confirmation times.
+                  </p>
+                </div>
+              </div>
+
+              <div class="tab-pane" id="nodes">
+                <p>
+                  Nodes are computers that run the Bitcoin software and maintain
+                  a copy of the blockchain. They form the peer-to-peer network
+                  that is the backbone of Bitcoin.
+                </p>
+
+                <div class="two-col">
+                  <div>
+                    <h4>Types of Nodes:</h4>
+                    <ul>
+                      <li>
+                        <strong>Full Nodes</strong>: Validate all transactions
+                        and blocks against Bitcoin's consensus rules
+                      </li>
+                      <li>
+                        <strong>Mining Nodes</strong>: Full nodes that also
+                        perform proof-of-work mining
+                      </li>
+                      <li>
+                        <strong>Light Clients</strong>: Store block headers
+                        only, rely on full nodes for transaction verification
+                      </li>
+                    </ul>
+
+                    <h4>Functions of Full Nodes:</h4>
+                    <ul>
+                      <li>Validate transactions and blocks</li>
+                      <li>Relay transactions and blocks to other nodes</li>
+                      <li>Maintain a complete copy of the blockchain</li>
+                      <li>Enforce consensus rules</li>
+                    </ul>
+                  </div>
+                  <div class="chart-container">
+                    <h4 class="chart-title">Bitcoin's Decentralized Network</h4>
+                    <svg
+                      viewBox="0 0 400 300"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <!-- Network visualization -->
+                      <!-- Central nodes -->
+                      <circle cx="200" cy="150" r="15" fill="#f2a900" />
+
+                      <!-- Surrounding nodes and connections -->
+                      <circle cx="120" cy="100" r="10" fill="#3498db" />
+                      <line
+                        x1="120"
+                        y1="100"
+                        x2="200"
+                        y2="150"
+                        stroke="#1a1a1a"
+                        stroke-width="1"
+                      />
+
+                      <circle cx="280" cy="100" r="10" fill="#3498db" />
+                      <line
+                        x1="280"
+                        y1="100"
+                        x2="200"
+                        y2="150"
+                        stroke="#1a1a1a"
+                        stroke-width="1"
+                      />
+
+                      <circle cx="100" cy="200" r="10" fill="#3498db" />
+                      <line
+                        x1="100"
+                        y1="200"
+                        x2="200"
+                        y2="150"
+                        stroke="#1a1a1a"
+                        stroke-width="1"
+                      />
+
+                      <circle cx="300" cy="200" r="10" fill="#3498db" />
+                      <line
+                        x1="300"
+                        y1="200"
+                        x2="200"
+                        y2="150"
+                        stroke="#1a1a1a"
+                        stroke-width="1"
+                      />
+
+                      <!-- Second layer nodes -->
+                      <circle cx="50" cy="80" r="8" fill="#2ecc71" />
+                      <line
+                        x1="50"
+                        y1="80"
+                        x2="120"
+                        y2="100"
+                        stroke="#1a1a1a"
+                        stroke-width="1"
+                        stroke-dasharray="5,5"
+                      />
+
+                      <circle cx="80" cy="50" r="8" fill="#2ecc71" />
+                      <line
+                        x1="80"
+                        y1="50"
+                        x2="120"
+                        y2="100"
+                        stroke="#1a1a1a"
+                        stroke-width="1"
+                        stroke-dasharray="5,5"
+                      />
+
+                      <circle cx="320" cy="80" r="8" fill="#2ecc71" />
+                      <line
+                        x1="320"
+                        y1="80"
+                        x2="280"
+                        y2="100"
+                        stroke="#1a1a1a"
+                        stroke-width="1"
+                        stroke-dasharray="5,5"
+                      />
+
+                      <circle cx="350" cy="50" r="8" fill="#2ecc71" />
+                      <line
+                        x1="350"
+                        y1="50"
+                        x2="280"
+                        y2="100"
+                        stroke="#1a1a1a"
+                        stroke-width="1"
+                        stroke-dasharray="5,5"
+                      />
+
+                      <circle cx="50" cy="230" r="8" fill="#2ecc71" />
+                      <line
+                        x1="50"
+                        y1="230"
+                        x2="100"
+                        y2="200"
+                        stroke="#1a1a1a"
+                        stroke-width="1"
+                        stroke-dasharray="5,5"
+                      />
+
+                      <circle cx="80" cy="260" r="8" fill="#2ecc71" />
+                      <line
+                        x1="80"
+                        y1="260"
+                        x2="100"
+                        y2="200"
+                        stroke="#1a1a1a"
+                        stroke-width="1"
+                        stroke-dasharray="5,5"
+                      />
+
+                      <circle cx="350" cy="230" r="8" fill="#2ecc71" />
+                      <line
+                        x1="350"
+                        y1="230"
+                        x2="300"
+                        y2="200"
+                        stroke="#1a1a1a"
+                        stroke-width="1"
+                        stroke-dasharray="5,5"
+                      />
+
+                      <circle cx="320" cy="260" r="8" fill="#2ecc71" />
+                      <line
+                        x1="320"
+                        y1="260"
+                        x2="300"
+                        y2="200"
+                        stroke="#1a1a1a"
+                        stroke-width="1"
+                        stroke-dasharray="5,5"
+                      />
+
+                      <!-- Legend -->
+                      <circle cx="330" cy="20" r="8" fill="#f2a900" />
+                      <text
+                        x="345"
+                        y="25"
+                        font-size="12"
+                        text-anchor="start"
+                        fill="#1a1a1a"
+                      >
+                        Mining Node
+                      </text>
+
+                      <circle cx="330" cy="40" r="8" fill="#3498db" />
+                      <text
+                        x="345"
+                        y="45"
+                        font-size="12"
+                        text-anchor="start"
+                        fill="#1a1a1a"
+                      >
+                        Full Node
+                      </text>
+
+                      <circle cx="330" cy="60" r="8" fill="#2ecc71" />
+                      <text
+                        x="345"
+                        y="65"
+                        font-size="12"
+                        text-anchor="start"
+                        fill="#1a1a1a"
+                      >
+                        Light Client
+                      </text>
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="fact-box">
+                  <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+                  <p>
+                    Running a full node is one of the most powerful ways an
+                    individual can support the Bitcoin network. By independently
+                    validating transactions against consensus rules, node
+                    operators collectively enforce Bitcoin's properties and
+                    resist centralization pressures.
+                  </p>
+                </div>
+
+                <p>
+                  Anyone can run a node with modest computing resources, making
+                  it possible for individuals to participate directly in the
+                  network's security and decentralization.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-bolt"></i>
+              </div>
+              <h3 class="card-title">
+                Scaling Solutions: The Lightning Network
+              </h3>
+            </div>
+
+            <p>
+              Bitcoin's base layer is designed for security and decentralization
+              rather than high transaction throughput. The Lightning Network is
+              a "layer 2" solution that enables faster, cheaper transactions
+              while inheriting Bitcoin's security properties.
+            </p>
+
+            <div class="chart-container">
+              <h4 class="chart-title">Lightning Network Explained</h4>
+              <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                <!-- Bitcoin Blockchain Base -->
+                <rect
+                  x="50"
+                  y="230"
+                  width="700"
+                  height="50"
+                  rx="5"
+                  fill="#f2a900"
+                />
+                <text
+                  x="400"
+                  y="260"
+                  font-size="18"
+                  text-anchor="middle"
+                  fill="#1a1a1a"
+                >
+                  Bitcoin Blockchain (Settlement Layer)
+                </text>
+
+                <!-- Lightning Channels -->
+                <line
+                  x1="100"
+                  y1="230"
+                  x2="100"
+                  y2="180"
+                  stroke="#9b59b6"
+                  stroke-width="3"
+                />
+                <line
+                  x1="250"
+                  y1="230"
+                  x2="250"
+                  y2="180"
+                  stroke="#9b59b6"
+                  stroke-width="3"
+                />
+                <line
+                  x1="400"
+                  y1="230"
+                  x2="400"
+                  y2="180"
+                  stroke="#9b59b6"
+                  stroke-width="3"
+                />
+                <line
+                  x1="550"
+                  y1="230"
+                  x2="550"
+                  y2="180"
+                  stroke="#9b59b6"
+                  stroke-width="3"
+                />
+                <line
+                  x1="700"
+                  y1="230"
+                  x2="700"
+                  y2="180"
+                  stroke="#9b59b6"
+                  stroke-width="3"
+                />
+
+                <!-- Lightning Network -->
+                <circle cx="100" cy="150" r="20" fill="#9b59b6" />
+                <circle cx="250" cy="150" r="20" fill="#9b59b6" />
+                <circle cx="400" cy="150" r="20" fill="#9b59b6" />
+                <circle cx="550" cy="150" r="20" fill="#9b59b6" />
+                <circle cx="700" cy="150" r="20" fill="#9b59b6" />
+
+                <line
+                  x1="100"
+                  y1="150"
+                  x2="250"
+                  y2="150"
+                  stroke="#9b59b6"
+                  stroke-width="2"
+                />
+                <line
+                  x1="250"
+                  y1="150"
+                  x2="400"
+                  y2="150"
+                  stroke="#9b59b6"
+                  stroke-width="2"
+                />
+                <line
+                  x1="400"
+                  y1="150"
+                  x2="550"
+                  y2="150"
+                  stroke="#9b59b6"
+                  stroke-width="2"
+                />
+                <line
+                  x1="550"
+                  y1="150"
+                  x2="700"
+                  y2="150"
+                  stroke="#9b59b6"
+                  stroke-width="2"
+                />
+
+                <line
+                  x1="100"
+                  y1="150"
+                  x2="400"
+                  y2="150"
+                  stroke="#9b59b6"
+                  stroke-width="1"
+                  stroke-dasharray="5,5"
+                />
+                <line
+                  x1="250"
+                  y1="150"
+                  x2="550"
+                  y2="150"
+                  stroke="#9b59b6"
+                  stroke-width="1"
+                  stroke-dasharray="5,5"
+                />
+                <line
+                  x1="100"
+                  y1="150"
+                  x2="550"
+                  y2="150"
+                  stroke="#9b59b6"
+                  stroke-width="1"
+                  stroke-dasharray="5,5"
+                />
+                <line
+                  x1="250"
+                  y1="150"
+                  x2="700"
+                  y2="150"
+                  stroke="#9b59b6"
+                  stroke-width="1"
+                  stroke-dasharray="5,5"
+                />
+
+                <!-- Users -->
+                <circle cx="100" cy="70" r="15" fill="#3498db" />
+                <text
+                  x="100"
+                  y="50"
+                  font-size="14"
+                  text-anchor="middle"
+                  fill="#1a1a1a"
+                >
+                  Alice
+                </text>
+                <line
+                  x1="100"
+                  y1="85"
+                  x2="100"
+                  y2="130"
+                  stroke="#3498db"
+                  stroke-width="2"
+                />
+
+                <circle cx="700" cy="70" r="15" fill="#3498db" />
+                <text
+                  x="700"
+                  y="50"
+                  font-size="14"
+                  text-anchor="middle"
+                  fill="#1a1a1a"
+                >
+                  Bob
+                </text>
+                <line
+                  x1="700"
+                  y1="85"
+                  x2="700"
+                  y2="130"
+                  stroke="#3498db"
+                  stroke-width="2"
+                />
+
+                <!-- Payment Arrow -->
+                <path
+                  d="M120,70 C300,20 500,20 680,70"
+                  stroke="#2ecc71"
+                  stroke-width="3"
+                  fill="none"
+                  marker-end="url(#arrowhead5)"
+                />
+                <text
+                  x="400"
+                  y="30"
+                  font-size="16"
+                  text-anchor="middle"
+                  fill="#2ecc71"
+                >
+                  Instant Payment
+                </text>
+
+                <!-- Labels -->
+                <text
+                  x="400"
+                  y="110"
+                  font-size="18"
+                  text-anchor="middle"
+                  fill="#9b59b6"
+                >
+                  Lightning Network (Payment Channels)
+                </text>
+
+                <!-- Arrowhead marker -->
+                <defs>
+                  <marker
+                    id="arrowhead5"
+                    markerWidth="10"
+                    markerHeight="7"
+                    refX="10"
+                    refY="3.5"
+                    orient="auto"
+                  >
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#2ecc71" />
+                  </marker>
+                </defs>
+              </svg>
+            </div>
+
+            <div class="two-col">
+              <div>
+                <h4>How Lightning Works:</h4>
+                <ol>
+                  <li>
+                    Users create payment channels by committing funds to a
+                    special Bitcoin transaction
+                  </li>
+                  <li>
+                    Multiple transactions can then occur off-chain between the
+                    channel participants
+                  </li>
+                  <li>
+                    Only the opening and closing transactions are recorded on
+                    the blockchain
+                  </li>
+                  <li>
+                    Channels connect to form a network, allowing payments
+                    between users who don't have direct channels
+                  </li>
+                </ol>
+              </div>
+              <div>
+                <h4>Lightning Benefits:</h4>
+                <ul>
+                  <li>Near-instant transactions</li>
+                  <li>Extremely low fees (often fractions of a cent)</li>
+                  <li>Enables micropayments and streaming money</li>
+                  <li>Enhances privacy</li>
+                  <li>Dramatically improves Bitcoin scalability</li>
+                  <li>Preserves the security of the base layer</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="fact-box">
+              <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+              <p>
+                Bitcoin's layered scaling approach is similar to the Internet's
+                TCP/IP stack, with a robust but slower base layer providing
+                security for faster, more specialized layers above. This
+                architecture allows Bitcoin to maintain its core properties
+                while scaling to billions of users.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="adoption" class="section">
+          <h2>Global Adoption and Investment Thesis</h2>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-globe"></i>
+              </div>
+              <h3 class="card-title">The Path to Global Monetary Network</h3>
+            </div>
+
+            <p>
+              Bitcoin's adoption follows a pattern similar to other
+              network-based technologies, from slow initial growth to rapid
+              expansion as network effects take hold.
+            </p>
+
+            <div class="chart-container">
+              <h4 class="chart-title">Bitcoin User Growth (Estimated)</h4>
+              <div class="chart-wrapper">
+                <canvas id="adoptionSCurveChart"></canvas>
+              </div>
+            </div>
+
+            <h4>Adoption Phases:</h4>
+
+            <div class="timeline">
+              <div class="timeline-item left">
+                <span class="timeline-year">2009-2013</span>
+                <div class="timeline-content">
+                  <h4>Ideological Phase</h4>
+                  <p>
+                    Early adopters: cypherpunks, libertarians, computer
+                    scientists
+                  </p>
+                </div>
+              </div>
+              <div class="timeline-item right">
+                <span class="timeline-year">2013-2017</span>
+                <div class="timeline-content">
+                  <h4>Speculation Phase</h4>
+                  <p>Traders, investors, and early venture capital</p>
+                </div>
+              </div>
+              <div class="timeline-item left">
+                <span class="timeline-year">2017-2021</span>
+                <div class="timeline-content">
+                  <h4>Infrastructure Phase</h4>
+                  <p>Businesses, exchanges, custody solutions</p>
+                </div>
+              </div>
+              <div class="timeline-item right">
+                <span class="timeline-year">2021-2025</span>
+                <div class="timeline-content">
+                  <h4>Institutional Phase</h4>
+                  <p>Corporations, investment funds, financial institutions</p>
+                </div>
+              </div>
+              <div class="timeline-item left">
+                <span class="timeline-year">2025+</span>
+                <div class="timeline-content">
+                  <h4>Nation-State Phase</h4>
+                  <p>Government reserves, central bank holdings</p>
+                </div>
+              </div>
+              <div class="timeline-item right">
+                <span class="timeline-year">2030+</span>
+                <div class="timeline-content">
+                  <h4>Monetary Standard</h4>
+                  <p>Global unit of account and settlement</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="quote-box">
+              <p>
+                "Bitcoin is a swarm of cyber hornets serving the goddess of
+                wisdom, feeding on the fire of truth, exponentially growing ever
+                smarter, faster, and stronger behind a wall of encrypted
+                energy."
+              </p>
+              <span class="quote-author">— Michael Saylor</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-chart-pie"></i>
+              </div>
+              <h3 class="card-title">The Investment Case</h3>
+            </div>
+
+            <h4>Bitcoin's Digital Scarcity in Historical Context</h4>
+            <p>
+              Bitcoin represents a technological breakthrough in the realm of
+              scarcity. Throughout history, humans have used various forms of
+              money, each with its own stock-to-flow ratio (existing supply
+              divided by annual production).
+            </p>
+
+            <div class="chart-container">
+              <h4 class="chart-title">Stock-to-Flow Comparison</h4>
+              <div class="chart-wrapper">
+                <canvas id="stockToFlowChart"></canvas>
+              </div>
+            </div>
+
+            <p>
+              Bitcoin's stock-to-flow ratio increases after each halving event,
+              making it progressively more scarce and potentially more valuable
+              as a store of value.
+            </p>
+
+            <div class="fact-box">
+              <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+              <p>
+                Bitcoin is the first asset in history to have a known, fixed
+                supply cap with a predictable issuance schedule that cannot be
+                altered by any authority. This absolute scarcity in the digital
+                realm is unprecedented and has profound implications for its
+                long-term value proposition.
+              </p>
+            </div>
+
+            <h4>Bitcoin as Financial Insurance</h4>
+            <p>Beyond speculation, Bitcoin serves as insurance against:</p>
+
+            <div class="two-col">
+              <div>
+                <ul>
+                  <li>Currency debasement and inflation</li>
+                  <li>Financial censorship and asset seizure</li>
+                  <li>Banking system failures</li>
+                  <li>Capital controls</li>
+                </ul>
+              </div>
+              <div>
+                <ul>
+                  <li>Negative interest rates</li>
+                  <li>Bail-ins and bail-outs</li>
+                  <li>Political instability</li>
+                  <li>Systemic financial risk</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="quote-box">
+              <p>
+                "The main reason why I'm a bitcoin maximalist is that I think
+                that bitcoin is the only cryptocurrency, or the only digital
+                asset, that has a shot at being integrated with, in a positive
+                way, with the existing financial architecture."
+              </p>
+              <span class="quote-author">— Saifedean Ammous</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-question-circle"></i>
+              </div>
+              <h3 class="card-title">Common Questions & Concerns</h3>
+            </div>
+
+            <div class="tabs">
+              <div class="tab active" data-tab="volatility">Volatility</div>
+              <div class="tab" data-tab="regulation">Regulation</div>
+              <div class="tab" data-tab="competition">Competition</div>
+              <div class="tab" data-tab="security">Security</div>
+            </div>
+
+            <div class="tab-content">
+              <div class="tab-pane active" id="volatility">
+                <h4>Isn't Bitcoin Too Volatile to Be Useful?</h4>
+                <p>
+                  Bitcoin's volatility is a feature of its monetization process,
+                  not a permanent characteristic. As adoption increases and
+                  liquidity deepens, volatility has decreased over time and is
+                  expected to continue this trend.
+                </p>
+
+                <div class="chart-container">
+                  <h4 class="chart-title">Bitcoin Volatility Over Time</h4>
+                  <div class="chart-wrapper">
+                    <canvas id="volatilityChart"></canvas>
+                  </div>
+                </div>
+
+                <p>
+                  Early-stage, rapidly growing monetary networks naturally
+                  experience price volatility as the market discovers the
+                  appropriate valuation. Gold experienced similar volatility
+                  during its monetization phases throughout history.
+                </p>
+
+                <div class="fact-box">
+                  <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+                  <p>
+                    Bitcoin's volatility is asymmetric—it has historically had a
+                    strong upward bias over longer time frames. While short-term
+                    price swings can be dramatic, Bitcoin has outperformed all
+                    other asset classes over most multi-year periods since its
+                    inception.
+                  </p>
+                </div>
+              </div>
+
+              <div class="tab-pane" id="regulation">
+                <h4>What About Government Regulation or Bans?</h4>
+                <p>
+                  Regulatory concerns are valid but often overestimated.
+                  Bitcoin's decentralized nature makes it resistant to complete
+                  suppression, as demonstrated by countries that have attempted
+                  and failed to ban it effectively.
+                </p>
+
+                <div class="chart-container">
+                  <h4 class="chart-title">
+                    Impact of Regulatory Events on Bitcoin
+                  </h4>
+                  <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Price chart background -->
+                    <rect
+                      x="50"
+                      y="50"
+                      width="700"
+                      height="200"
+                      fill="#f8f9fa"
+                    />
+
+                    <!-- X and Y axes -->
+                    <line
+                      x1="50"
+                      y1="250"
+                      x2="750"
+                      y2="250"
+                      stroke="#333"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="50"
+                      y1="50"
+                      x2="50"
+                      y2="250"
+                      stroke="#333"
+                      stroke-width="1"
+                    />
+
+                    <!-- Price line -->
+                    <path
+                      d="M50,220 L150,200 L250,180 L350,150 L450,100 L550,120 L650,80 L750,60"
+                      stroke="#f2a900"
+                      stroke-width="3"
+                      fill="none"
+                    />
+
+                    <!-- Event markers -->
+                    <line
+                      x1="150"
+                      y1="50"
+                      x2="150"
+                      y2="250"
+                      stroke="#e74c3c"
+                      stroke-width="1"
+                      stroke-dasharray="5,5"
+                    />
+                    <text
+                      x="150"
+                      y="270"
+                      font-size="10"
+                      text-anchor="middle"
+                      fill="#e74c3c"
+                    >
+                      China Ban 2013
+                    </text>
+
+                    <line
+                      x1="350"
+                      y1="50"
+                      x2="350"
+                      y2="250"
+                      stroke="#e74c3c"
+                      stroke-width="1"
+                      stroke-dasharray="5,5"
+                    />
+                    <text
+                      x="350"
+                      y="270"
+                      font-size="10"
+                      text-anchor="middle"
+                      fill="#e74c3c"
+                    >
+                      China Ban 2017
+                    </text>
+
+                    <line
+                      x1="550"
+                      y1="50"
+                      x2="550"
+                      y2="250"
+                      stroke="#e74c3c"
+                      stroke-width="1"
+                      stroke-dasharray="5,5"
+                    />
+                    <text
+                      x="550"
+                      y="270"
+                      font-size="10"
+                      text-anchor="middle"
+                      fill="#e74c3c"
+                    >
+                      China Ban 2021
+                    </text>
+                  </svg>
+                </div>
+
+                <p>
+                  Regulatory clarity is emerging globally, with major
+                  jurisdictions moving toward acceptance and integration rather
+                  than prohibition. The trend is toward regulated incorporation
+                  into the financial system, particularly as institutions and
+                  corporations become stakeholders.
+                </p>
+
+                <div class="quote-box">
+                  <p>
+                    "Every time a government bans Bitcoin, it just gives a
+                    strong validation signal to everyone else that they can't
+                    stop it. It's fundamentally unbannable because it's just
+                    information."
+                  </p>
+                  <span class="quote-author">— Andreas Antonopoulos</span>
+                </div>
+              </div>
+
+              <div class="tab-pane" id="competition">
+                <h4>Won't Another Cryptocurrency Replace Bitcoin?</h4>
+                <p>
+                  The "Bitcoin will be replaced" argument misunderstands the
+                  primary value proposition of Bitcoin—its unmatched security,
+                  decentralization, and network effects as a monetary good.
+                </p>
+
+                <div class="two-col">
+                  <div>
+                    <h4>Bitcoin's Competitive Advantages:</h4>
+                    <ul>
+                      <li>
+                        <strong>First-mover advantage</strong> with over a
+                        decade of battle-testing
+                      </li>
+                      <li>
+                        <strong>Unmatched security</strong> from the largest
+                        computing network in history
+                      </li>
+                      <li>
+                        <strong>True decentralization</strong> with no
+                        controlling entity or foundation
+                      </li>
+                      <li>
+                        <strong>Perfect monetary policy</strong> with
+                        predetermined issuance schedule
+                      </li>
+                      <li>
+                        <strong>Brand recognition</strong> and network effects
+                      </li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4>Money as a Network Good:</h4>
+                    <p>
+                      Money is a winner-take-most market because its primary
+                      function is as a coordination tool for societal value
+                      exchange. The more people using a monetary network, the
+                      more valuable it becomes.
+                    </p>
+                    <p>
+                      This network effect creates a powerful gravity that pulls
+                      in more users, increasing liquidity, security, and utility
+                      in a virtuous cycle.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="fact-box">
+                  <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+                  <p>
+                    Money is not primarily a technology but a social consensus.
+                    While technology can be easily improved and replicated, the
+                    social consensus around a monetary good is extremely
+                    difficult to displace once established.
+                  </p>
+                </div>
+              </div>
+
+              <div class="tab-pane" id="security">
+                <h4>Is Bitcoin Secure from Attacks?</h4>
+                <p>
+                  Bitcoin's security model has proven remarkably robust over its
+                  existence, surviving numerous technical challenges, market
+                  crashes, and deliberate attacks.
+                </p>
+
+                <h4>Key Security Considerations:</h4>
+
+                <ul>
+                  <li>
+                    <strong>51% Attack:</strong> Theoretically possible but
+                    economically irrational, as it would require billions in
+                    specialized hardware that would lose value if Bitcoin were
+                    successfully attacked
+                  </li>
+                  <li>
+                    <strong>Quantum Computing:</strong> Bitcoin's address format
+                    can be updated via soft fork to use quantum-resistant
+                    cryptography if needed
+                  </li>
+                  <li>
+                    <strong>Software Bugs:</strong> Bitcoin's conservative
+                    development approach prioritizes security over rapid
+                    innovation
+                  </li>
+                  <li>
+                    <strong>Social Attacks:</strong> Bitcoin's decentralized
+                    governance makes it highly resistant to capture by special
+                    interests
+                  </li>
+                </ul>
+
+                <div class="chart-container">
+                  <h4 class="chart-title">
+                    Bitcoin Network Security Growth (Hash Rate)
+                  </h4>
+                  <div class="chart-wrapper">
+                    <canvas id="networkSecurityChart"></canvas>
+                  </div>
+                </div>
+
+                <div class="fact-box"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
